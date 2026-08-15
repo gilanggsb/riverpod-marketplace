@@ -1,0 +1,7 @@
+format=1
+repository=riverpod-marketplace
+layer=common/agent-rules
+layer=common/templates
+layer=common/architecture
+layer=common/conventions
+layer=flutter/conventions
