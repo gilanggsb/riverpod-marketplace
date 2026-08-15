@@ -1,21 +1,21 @@
-# Clean Architecture & Riverpod di Flutter
+# Clean Architecture & Riverpod in Flutter
 
-Dokumen ini berisi konvensi dan best practices berdasarkan sesi implementasi "Marketplace Mini".
+This document outlines the conventions and best practices based on the implementation of the "Marketplace Mini".
 
-## 1. Pemisahan Layer (Dependency Rule)
-Aturan utama: **Arah dependensi selalu mengarah ke dalam (Presentation -> Domain <- Data).**
-*   **Domain Layer (Entity & UseCase):** Pusat logika bisnis. Tidak boleh mengimpor package UI (`flutter`), Riverpod API (`flutter_riverpod`), atau struktur data eksternal (Model/DTO/API/DB).
-*   **Data Layer (Repository Impl & Data Source):** Bertugas menerjemahkan Model (DTO) menjadi Entity. Boleh mengimpor *library* pihak ketiga seperti Dio, http, atau freezed.
-*   **Presentation Layer (Controller/Notifier & UI):** Mengatur *state* dan tampilan. Berkomunikasi dengan UseCase, tidak boleh langsung ke Repository.
+## 1. Layer Separation (Dependency Rule)
+Primary Rule: **Dependency direction must always point inward (Presentation -> Domain <- Data).**
+*   **Domain Layer (Entity & UseCase):** The center of business logic. Must NEVER import UI packages (`flutter`), Riverpod API (`flutter_riverpod`), or external data structures (Model/DTO/API/DB).
+*   **Data Layer (Repository Impl & Data Source):** Responsible for translating Models (DTOs) into Entities. Allowed to import third-party libraries like Dio, http, or freezed.
+*   **Presentation Layer (Controller/Notifier & UI):** Manages state and views. Communicates with UseCases, must NEVER communicate directly with the Repository.
 
 ## 2. DTO (Model) vs Entity
-Selalu pisahkan struktur data yang dikirim/diterima API dengan struktur murni aplikasi (Entity).
+Always separate the data structures sent/received by the API from the pure application structures (Entities).
 
 ### Request Parameters
-*   **`...RequestParams` (Domain):** Class murni Dart tanpa anotasi JSON. Membawa data dari Controller -> UseCase -> Repository.
-*   **`...RequestModel` (Data):** DTO di-generate dengan `freezed`. Menerjemahkan Params menjadi format yang dimengerti API (menggunakan `@JsonKey` dan `.toJson()`).
+*   **`...RequestParams` (Domain):** Pure Dart class without JSON annotations. Carries data from Controller -> UseCase -> Repository.
+*   **`...RequestModel` (Data):** DTO generated with `freezed`. Translates Params into a format understood by the API (using `@JsonKey` and `.toJson()`).
 
-**Contoh (Request):**
+**Example (Request):**
 ```dart
 // 1. DOMAIN LAYER (product_request_params.dart)
 class ProductRequestParams {
@@ -29,14 +29,14 @@ class ProductRequestParams {
 class ProductRequestModel with _$ProductRequestModel {
   const factory ProductRequestModel({
     required int limit,
-    @JsonKey(name: 'page_offset') required int offset, // Mapping untuk API
+    @JsonKey(name: 'page_offset') required int offset, // Mapping for API
   }) = _ProductRequestModel;
   
   factory ProductRequestModel.fromJson(Map<String, dynamic> json) => _$ProductRequestModelFromJson(json);
 }
 
 // 3. REPOSITORY LAYER (product_repository_impl.dart)
-// Menerjemahkan Params ke Model
+// Translating Params to Model
 Future<List<ProductEntity>> getProducts(ProductRequestParams params) async {
   final model = ProductRequestModel(limit: params.limit, offset: params.offset);
   return await remoteService.getProducts(model);
@@ -44,10 +44,10 @@ Future<List<ProductEntity>> getProducts(ProductRequestParams params) async {
 ```
 
 ### Response Data
-*   **`...ResponseModel` / `...Model` (Data):** Menangkap respon mentah dari API (`.fromJson()`). Wajib menggunakan `@JsonKey` jika format penamaan backend tidak konsisten dengan camelCase Dart (misal: *snake_case*).
-*   **`...Entity` (Domain):** Objek inti aplikasi. Dipetakan (*mapped*) oleh Repository Impl dari Model.
+*   **`...ResponseModel` / `...Model` (Data):** Captures raw responses from the API (`.fromJson()`). Must use `@JsonKey` if the backend naming format is inconsistent with Dart's camelCase (e.g., *snake_case*).
+*   **`...Entity` (Domain):** Core application object. Mapped by the Repository Impl from the Model.
 
-**Contoh (Response):**
+**Example (Response):**
 ```dart
 // 1. DATA LAYER (product_model.dart)
 @freezed
@@ -68,27 +68,47 @@ class ProductEntity {
 }
 
 // 3. REPOSITORY LAYER (product_repository_impl.dart)
-// Menerjemahkan Model ke Entity
+// Translating Model to Entity
 ProductEntity toEntity(ProductModel model) {
   return ProductEntity(id: model.id, title: model.title);
 }
 ```
 
-## 3. Best Practices Riverpod
-1. **Gunakan `ref.watch` di dalam `build()`:** Jangan pernah menggunakan `ref.read` di dalam method `build()` (baik widget maupun notifier) agar state selalu ter-update jika dependensinya berubah.
+## 3. Riverpod Best Practices
+1. **Use `ref.watch` inside `build()`:** Never use `ref.read` inside the `build()` method (neither in widgets nor notifiers) to ensure the state always updates if its dependency changes.
    ```dart
    @riverpod
    class ProductController extends _$ProductController {
      @override
      Future<List<ProductEntity>> build() async {
-       // BENAR: Gunakan watch agar selalu re-fetch jika dependency berubah
+       // CORRECT: Use watch to always re-fetch if dependency changes
        final useCase = ref.watch(getProductsUseCaseProvider);
        return await useCase.execute();
      }
    }
    ```
-2. **Pisahkan State Independen:** Data yang sifatnya mandiri (seperti search query atau filter kategori) harus dibuat sebagai provider terpisah (`StateProvider`), bukan digabungkan secara paksa ke dalam satu class State yang besar. Controller utama dapat melakukan `ref.watch` terhadap provider independen tersebut.
+2. **Separate Independent States:** Independent data (like search queries or category filters) should be created as separate providers (`StateProvider`), not forced into one massive State class. The main Controller can `ref.watch` these independent providers.
    ```dart
    final searchQueryProvider = StateProvider<String>((ref) => '');
    ```
-3. **Pagination State:** Gunakan satu class State khusus (contoh: `ProductPaginationState`) untuk melacak list data, `offset`, `hasMore`, dan `isLoadingMore`.
+3. **Pagination State:** Use a dedicated State class (e.g., `ProductPaginationState`) to track the data list, `offset`, `hasMore`, and `isLoadingMore`.
+
+---
+
+## 4. Dos and Don'ts
+
+### Architecture & Layering
+*   ✅ **DO** ensure the Domain layer depends on nothing. It is the heart of the app.
+*   ✅ **DO** pass dependencies through constructors for easier testing.
+*   ❌ **DON'T** let UI widgets talk directly to the Repository or Data Source.
+*   ❌ **DON'T** place JSON parsing logic (`fromJson`, `@JsonKey`) inside Entities.
+
+### Riverpod Usage
+*   ✅ **DO** use `ref.read` only in callbacks or lifecycle events (e.g., `onPressed`, `initState`).
+*   ✅ **DO** use `ref.listen` for executing side-effects (e.g., showing SnackBars, navigating) based on state changes.
+*   ❌ **DON'T** use `ref.read` inside the `build()` method to fetch dependencies that might change over time.
+*   ❌ **DON'T** cache or store a `ref` or `Notifier` instance in a variable to use it after an `await`. Always look it up fresh if needed.
+
+### State Management
+*   ✅ **DO** group tightly related variables (like `list`, `isLoadingMore`, `hasMore`) into a single State class.
+*   ❌ **DON'T** create "God States" that hold completely unrelated data (e.g., `searchQuery` and `userProfile` in the same class).
