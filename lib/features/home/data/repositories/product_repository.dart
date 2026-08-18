@@ -19,7 +19,7 @@ class ProductRepositoryImpl extends ProductRepository {
     final products = await _productRemoteService.getProducts(requestParams);
     final productEntities = <ProductEntity>[];
     for (Product? product in products) {
-      productEntities.add(ProductEntity(id: product?.id, name: product?.title));
+      productEntities.add(ProductEntity(id: product?.id, name: product?.title, price: product?.price));
     }
     return productEntities;
   }

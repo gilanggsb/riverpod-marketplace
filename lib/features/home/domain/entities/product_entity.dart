@@ -1,14 +1,8 @@
-class ProductEntity {
-  final int? id;
-  final String? name;
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-  ProductEntity({this.id, this.name});
+part 'product_entity.freezed.dart';
 
-  factory ProductEntity.fromMap(Map<String, dynamic> map) {
-    return ProductEntity(id: map['id'], name: map['name']);
-  }
-
-  Map<String, dynamic> toMap() {
-    return {'id': id, 'name': name};
-  }
+@freezed
+abstract class ProductEntity with _$ProductEntity {
+  const factory ProductEntity({final int? id, final String? name, final double? price}) = _ProductEntity;
 }
