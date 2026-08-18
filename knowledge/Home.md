@@ -20,6 +20,7 @@ Hub utama setiap domain dalam aplikasi Marketplace.
 ## Technical Areas
 
 - [[Architecture/State Management]] - Panduan spesifik penggunaan Riverpod (Providers, Notifiers).
+- [[Architecture/Riverpod Q&A]] - Deep dive into Riverpod behaviors (watch vs read) and StateProviders.
 - [[Architecture/Api and Data Access]] - API layer, Repository, dan Service.
 - [[Architecture/Data Models]] - Freezed, json_serializable, dan Entity mapping.
 - [[Decisions/Index]] - Architectural decision records (ADR).
