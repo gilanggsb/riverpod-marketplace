@@ -6,18 +6,17 @@ part 'product.g.dart';
 @freezed
 abstract class Product with _$Product {
   const factory Product({
-    required int id,
-    required String title,
-    required String description,
-    required String category,
-    required double price,
-    required double discountPercentage,
-    required double rating,
-    required int stock,
-    required List<String> tags,
-    required String brand,
-    required String thumbnail,
-    required List<String> images,
+    @JsonKey(name: "id") final int? id,
+    @JsonKey(name: "title") final String? title,
+    @JsonKey(name: "description") final String? description,
+    @JsonKey(name: "category") final String? category,
+    @JsonKey(name: "price") final double? price,
+    @JsonKey(name: "discountPercentage") final double? discountPercentage,
+    @JsonKey(name: "rating") final double? rating,
+    @JsonKey(name: "stock") final int? stock,
+    @JsonKey(name: "tags") final List<String>? tags,
+    @JsonKey(name: "brand") final String? brand,
+    @JsonKey(name: "thumbnail") final List<String>? images,
   }) = _Product;
 
   factory Product.fromJson(Map<String, dynamic> json) => _$ProductFromJson(json);

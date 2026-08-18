@@ -10,8 +10,8 @@ class GetProductsUseCase {
 
   GetProductsUseCase(this._productRepository);
 
-  Future<List<ProductEntity?>> call() async {
-    return await _productRepository.getProducts();
+  Future<List<ProductEntity?>> call(ProductRequestParams params) async {
+    return await _productRepository.getProducts(params);
   }
 }
 

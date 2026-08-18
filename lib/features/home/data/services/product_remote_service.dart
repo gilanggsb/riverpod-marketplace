@@ -1,10 +1,10 @@
-import '../../../features.dart' show Product;
+import 'package:riverpod_marketplace/features/home/home.dart';
 
 class ProductRemoteService {
-  Future<List<Product?>> getProducts() async {
+  Future<List<Product?>> getProducts(ProductRequestModel params) async {
     await Future.delayed(const Duration(seconds: 2));
     final products = <Product>[];
-    for (var i = 0; i < 10; i++) {
+    for (var i = (params.offset ?? 0); i < (params.limit ?? 10) + (params.offset ?? 0); i++) {
       products.add(
         Product(
           id: i,
@@ -17,7 +17,6 @@ class ProductRemoteService {
           stock: i,
           tags: ["tag $i"],
           brand: "brand $i",
-          thumbnail: "thumbnail $i",
           images: ["image $i"],
         ),
       );

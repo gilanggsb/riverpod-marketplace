@@ -5,15 +5,18 @@ import 'package:riverpod_marketplace/features/features.dart';
 part 'product_repository.g.dart';
 
 abstract class ProductRepository {
-  Future<List<ProductEntity?>> getProducts();
+  Future<List<ProductEntity?>> getProducts(ProductRequestParams params);
 }
 
 class ProductRepositoryImpl extends ProductRepository {
-  late ProductRemoteService _productRemoteService;
+  final ProductRemoteService _productRemoteService;
+
+  ProductRepositoryImpl({required this._productRemoteService});
 
   @override
-  Future<List<ProductEntity?>> getProducts() async {
-    final products = await _productRemoteService.getProducts();
+  Future<List<ProductEntity?>> getProducts(ProductRequestParams params) async {
+    final requestParams = ProductRequestModel(limit: params.limit, offset: params.offset, searchKey: params.searchKey);
+    final products = await _productRemoteService.getProducts(requestParams);
     final productEntities = <ProductEntity>[];
     for (Product? product in products) {
       productEntities.add(ProductEntity(id: product?.id, name: product?.title));
@@ -24,5 +27,5 @@ class ProductRepositoryImpl extends ProductRepository {
 
 @Riverpod(keepAlive: true)
 ProductRepository productRepository(Ref ref) {
-  return ProductRepositoryImpl();
+  return ProductRepositoryImpl(productRemoteService: ProductRemoteService());
 }

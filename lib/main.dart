@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'features/home/home.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -10,6 +12,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const ProviderScope(child: Scaffold(body: Placeholder()));
+    return const ProviderScope(child: MaterialApp(home: ProductScreen()));
   }
 }

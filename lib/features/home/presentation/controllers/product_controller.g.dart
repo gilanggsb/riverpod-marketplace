@@ -6,14 +6,14 @@ part of 'product_controller.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$productControllerHash() => r'f475740a2bd2e060de8922b82ceac973412ef86a';
+String _$productControllerHash() => r'579368447230b3fa9b4f23b554e691064e58f72e';
 
 /// See also [ProductController].
 @ProviderFor(ProductController)
 final productControllerProvider =
     AutoDisposeAsyncNotifierProvider<
       ProductController,
-      List<ProductEntity?>
+      ProductPaginationState
     >.internal(
       ProductController.new,
       name: r'productControllerProvider',
@@ -24,6 +24,6 @@ final productControllerProvider =
       allTransitiveDependencies: null,
     );
 
-typedef _$ProductController = AutoDisposeAsyncNotifier<List<ProductEntity?>>;
+typedef _$ProductController = AutoDisposeAsyncNotifier<ProductPaginationState>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
