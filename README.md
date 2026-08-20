@@ -21,4 +21,10 @@ A Flutter learning project implementing Clean Architecture and Riverpod.
 - Used `StateProvider` and `keepAlive: true` for the Cart Controller to persist data globally.
 - Created derived provider (`cartTotal`) for reactive, UI-agnostic price calculation.
 
+### ✅ Ticket 4: Search & Category Filter (Debounced & Independent States)
+- Implemented generic `SearchQuery` family provider in `common/presentation/controllers/` with configurable debounce duration and auto-disposal.
+- Fetched categories dynamically via `GetCategoriesUseCase` and isolated its state in `CategoryController`.
+- Used granular UI rebuilds with `.select()` inside `CategoryChip`.
+- `ProductController` watches both `searchQuery` and `categoryController` reactively, resetting pagination offset to 0 on any filter changes while preserving infinite scrolling.
+
 ---

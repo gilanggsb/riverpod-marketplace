@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$ProductRequestModel {
 
-@JsonKey(name: "limit") int? get limit;@JsonKey(name: "offset") int? get offset;@JsonKey(name: "search_Key") String? get searchKey;
+@JsonKey(name: "limit") int? get limit;@JsonKey(name: "offset") int? get offset;@JsonKey(name: "search_Key") String? get searchKey;@JsonKey(name: "category_id") int? get categoryId;
 /// Create a copy of ProductRequestModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $ProductRequestModelCopyWith<ProductRequestModel> get copyWith => _$ProductReque
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ProductRequestModel&&(identical(other.limit, limit) || other.limit == limit)&&(identical(other.offset, offset) || other.offset == offset)&&(identical(other.searchKey, searchKey) || other.searchKey == searchKey));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ProductRequestModel&&(identical(other.limit, limit) || other.limit == limit)&&(identical(other.offset, offset) || other.offset == offset)&&(identical(other.searchKey, searchKey) || other.searchKey == searchKey)&&(identical(other.categoryId, categoryId) || other.categoryId == categoryId));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,limit,offset,searchKey);
+int get hashCode => Object.hash(runtimeType,limit,offset,searchKey,categoryId);
 
 @override
 String toString() {
-  return 'ProductRequestModel(limit: $limit, offset: $offset, searchKey: $searchKey)';
+  return 'ProductRequestModel(limit: $limit, offset: $offset, searchKey: $searchKey, categoryId: $categoryId)';
 }
 
 
@@ -48,7 +48,7 @@ abstract mixin class $ProductRequestModelCopyWith<$Res>  {
   factory $ProductRequestModelCopyWith(ProductRequestModel value, $Res Function(ProductRequestModel) _then) = _$ProductRequestModelCopyWithImpl;
 @useResult
 $Res call({
-@JsonKey(name: "limit") int? limit,@JsonKey(name: "offset") int? offset,@JsonKey(name: "search_Key") String? searchKey
+@JsonKey(name: "limit") int? limit,@JsonKey(name: "offset") int? offset,@JsonKey(name: "search_Key") String? searchKey,@JsonKey(name: "category_id") int? categoryId
 });
 
 
@@ -65,12 +65,13 @@ class _$ProductRequestModelCopyWithImpl<$Res>
 
 /// Create a copy of ProductRequestModel
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? limit = freezed,Object? offset = freezed,Object? searchKey = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? limit = freezed,Object? offset = freezed,Object? searchKey = freezed,Object? categoryId = freezed,}) {
   return _then(_self.copyWith(
 limit: freezed == limit ? _self.limit : limit // ignore: cast_nullable_to_non_nullable
 as int?,offset: freezed == offset ? _self.offset : offset // ignore: cast_nullable_to_non_nullable
 as int?,searchKey: freezed == searchKey ? _self.searchKey : searchKey // ignore: cast_nullable_to_non_nullable
-as String?,
+as String?,categoryId: freezed == categoryId ? _self.categoryId : categoryId // ignore: cast_nullable_to_non_nullable
+as int?,
   ));
 }
 
@@ -155,10 +156,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@JsonKey(name: "limit")  int? limit, @JsonKey(name: "offset")  int? offset, @JsonKey(name: "search_Key")  String? searchKey)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@JsonKey(name: "limit")  int? limit, @JsonKey(name: "offset")  int? offset, @JsonKey(name: "search_Key")  String? searchKey, @JsonKey(name: "category_id")  int? categoryId)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _ProductRequestModel() when $default != null:
-return $default(_that.limit,_that.offset,_that.searchKey);case _:
+return $default(_that.limit,_that.offset,_that.searchKey,_that.categoryId);case _:
   return orElse();
 
 }
@@ -176,10 +177,10 @@ return $default(_that.limit,_that.offset,_that.searchKey);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@JsonKey(name: "limit")  int? limit, @JsonKey(name: "offset")  int? offset, @JsonKey(name: "search_Key")  String? searchKey)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@JsonKey(name: "limit")  int? limit, @JsonKey(name: "offset")  int? offset, @JsonKey(name: "search_Key")  String? searchKey, @JsonKey(name: "category_id")  int? categoryId)  $default,) {final _that = this;
 switch (_that) {
 case _ProductRequestModel():
-return $default(_that.limit,_that.offset,_that.searchKey);case _:
+return $default(_that.limit,_that.offset,_that.searchKey,_that.categoryId);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -196,10 +197,10 @@ return $default(_that.limit,_that.offset,_that.searchKey);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@JsonKey(name: "limit")  int? limit, @JsonKey(name: "offset")  int? offset, @JsonKey(name: "search_Key")  String? searchKey)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@JsonKey(name: "limit")  int? limit, @JsonKey(name: "offset")  int? offset, @JsonKey(name: "search_Key")  String? searchKey, @JsonKey(name: "category_id")  int? categoryId)?  $default,) {final _that = this;
 switch (_that) {
 case _ProductRequestModel() when $default != null:
-return $default(_that.limit,_that.offset,_that.searchKey);case _:
+return $default(_that.limit,_that.offset,_that.searchKey,_that.categoryId);case _:
   return null;
 
 }
@@ -211,12 +212,13 @@ return $default(_that.limit,_that.offset,_that.searchKey);case _:
 @JsonSerializable()
 
 class _ProductRequestModel implements ProductRequestModel {
-  const _ProductRequestModel({@JsonKey(name: "limit") this.limit, @JsonKey(name: "offset") this.offset, @JsonKey(name: "search_Key") this.searchKey});
+  const _ProductRequestModel({@JsonKey(name: "limit") this.limit, @JsonKey(name: "offset") this.offset, @JsonKey(name: "search_Key") this.searchKey, @JsonKey(name: "category_id") this.categoryId});
   factory _ProductRequestModel.fromJson(Map<String, dynamic> json) => _$ProductRequestModelFromJson(json);
 
 @override@JsonKey(name: "limit") final  int? limit;
 @override@JsonKey(name: "offset") final  int? offset;
 @override@JsonKey(name: "search_Key") final  String? searchKey;
+@override@JsonKey(name: "category_id") final  int? categoryId;
 
 /// Create a copy of ProductRequestModel
 /// with the given fields replaced by the non-null parameter values.
@@ -231,16 +233,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ProductRequestModel&&(identical(other.limit, limit) || other.limit == limit)&&(identical(other.offset, offset) || other.offset == offset)&&(identical(other.searchKey, searchKey) || other.searchKey == searchKey));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ProductRequestModel&&(identical(other.limit, limit) || other.limit == limit)&&(identical(other.offset, offset) || other.offset == offset)&&(identical(other.searchKey, searchKey) || other.searchKey == searchKey)&&(identical(other.categoryId, categoryId) || other.categoryId == categoryId));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,limit,offset,searchKey);
+int get hashCode => Object.hash(runtimeType,limit,offset,searchKey,categoryId);
 
 @override
 String toString() {
-  return 'ProductRequestModel(limit: $limit, offset: $offset, searchKey: $searchKey)';
+  return 'ProductRequestModel(limit: $limit, offset: $offset, searchKey: $searchKey, categoryId: $categoryId)';
 }
 
 
@@ -251,7 +253,7 @@ abstract mixin class _$ProductRequestModelCopyWith<$Res> implements $ProductRequ
   factory _$ProductRequestModelCopyWith(_ProductRequestModel value, $Res Function(_ProductRequestModel) _then) = __$ProductRequestModelCopyWithImpl;
 @override @useResult
 $Res call({
-@JsonKey(name: "limit") int? limit,@JsonKey(name: "offset") int? offset,@JsonKey(name: "search_Key") String? searchKey
+@JsonKey(name: "limit") int? limit,@JsonKey(name: "offset") int? offset,@JsonKey(name: "search_Key") String? searchKey,@JsonKey(name: "category_id") int? categoryId
 });
 
 
@@ -268,12 +270,13 @@ class __$ProductRequestModelCopyWithImpl<$Res>
 
 /// Create a copy of ProductRequestModel
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? limit = freezed,Object? offset = freezed,Object? searchKey = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? limit = freezed,Object? offset = freezed,Object? searchKey = freezed,Object? categoryId = freezed,}) {
   return _then(_ProductRequestModel(
 limit: freezed == limit ? _self.limit : limit // ignore: cast_nullable_to_non_nullable
 as int?,offset: freezed == offset ? _self.offset : offset // ignore: cast_nullable_to_non_nullable
 as int?,searchKey: freezed == searchKey ? _self.searchKey : searchKey // ignore: cast_nullable_to_non_nullable
-as String?,
+as String?,categoryId: freezed == categoryId ? _self.categoryId : categoryId // ignore: cast_nullable_to_non_nullable
+as int?,
   ));
 }
 

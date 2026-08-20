@@ -11,6 +11,7 @@ _ProductRequestModel _$ProductRequestModelFromJson(Map<String, dynamic> json) =>
       limit: (json['limit'] as num?)?.toInt(),
       offset: (json['offset'] as num?)?.toInt(),
       searchKey: json['search_Key'] as String?,
+      categoryId: (json['category_id'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$ProductRequestModelToJson(
@@ -19,4 +20,5 @@ Map<String, dynamic> _$ProductRequestModelToJson(
   'limit': instance.limit,
   'offset': instance.offset,
   'search_Key': instance.searchKey,
+  'category_id': instance.categoryId,
 };

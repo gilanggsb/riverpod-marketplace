@@ -9,6 +9,7 @@ abstract class ProductRequestModel with _$ProductRequestModel {
     @JsonKey(name: "limit") final int? limit,
     @JsonKey(name: "offset") final int? offset,
     @JsonKey(name: "search_Key") final String? searchKey,
+    @JsonKey(name: "category_id") final int? categoryId,
   }) = _ProductRequestModel;
   factory ProductRequestModel.fromJson(Map<String, dynamic> json) => _$ProductRequestModelFromJson(json);
 }
